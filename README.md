@@ -1,18 +1,22 @@
 # github-contribution-log
 GitHub contribution log for CodePath Summer - AI 301
 
-# Contribution [#]: [Issue Title]
+# Contribution [1]: [[React Doctor] alt-text: Missing alt attribute (14 occurrences)]
 
-**Contribution Number:** [1 / 2 / 3]  
-**Student:** [Your Name]  
-**Issue:** [GitHub issue link]  
-**Status:** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete]
+**Contribution Number:** [1]  
+**Student:** [Dhruvi Rana]  
+**Issue:** [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]  
+**Status:** [Phase I Complete]
 
 ---
 
 ## Why I Chose This Issue
 
 [1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+
+[This issue interests me because it focuses on improving accessibility for users. Ensuring that websites are usable by everyone, including people who rely on assistive technologies such as screen readers, is an important part of creating an inclusive user experience. Adding appropriate alt attributes helps make content more accessible and aligns with best practices for web development.
+
+This issue matches my skills because I have previously worked on projects using JavaScript, TypeScript, and CSS. It also aligns with my learning goals of gaining experience working with a larger codebase and contributing to open-source projects. Through this issue, I hope to develop a better understanding of the open-source contribution process, learn how accessibility considerations are implemented in real-world applications, and gain insight into common challenges and best practices when making contributions.]
 
 ---
 
