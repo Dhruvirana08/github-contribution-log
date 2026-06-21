@@ -51,17 +51,17 @@ The reported <img> tags should have alt attributes. Decorative images should use
 [Which parts of the codebase are involved?]
 
 Affected files: 
-./features/admin.application-templates.v1/components/application-template-card.tsx
-./features/admin.core.v1/components/modals/feature-preview-modal.tsx
-./features/admin.flow-builder-core.v1/components/resources/elements/adapters/button-adapter.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/apple-execution.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/facebook-execution.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/github-execution.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/google-execution.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/microsoft-execution.tsx
-./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/index.tsx
-./features/admin.login-flow-builder.v1/components/nodes/sign-in-box-node/sign-in-box-node.tsx
-./features/admin.push-providers.v1/components/push-provider-card.tsx
+1. ./features/admin.application-templates.v1/components/application-template-card.tsx
+2. ./features/admin.core.v1/components/modals/feature-preview-modal.tsx
+3. ./features/admin.flow-builder-core.v1/components/resources/elements/adapters/button-adapter.tsx
+4. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/apple-execution.tsx
+5. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/facebook-execution.tsx
+6. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/github-execution.tsx
+7. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/google-execution.tsx
+8. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/microsoft-execution.tsx
+9. ./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/index.tsx
+10. ./features/admin.login-flow-builder.v1/components/nodes/sign-in-box-node/sign-in-box-node.tsx
+11. ./features/admin.push-providers.v1/components/push-provider-card.tsx
 
 These are also the same files mentioned in the comment on the issue page. 
 ---
@@ -72,17 +72,36 @@ These are also the same files mentioned in the comment on the issue page.
 
 [Notes on setting up your local development environment - challenges you faced, how you solved them]
 
+Used the README and CONTRIBUTING.md of the repo to complete the environment setup. It took approximately 3 hours to install all prerequisites (JDK, Maven, Node.js, pnpm, Git), clone the repo, download and configure WSO2 Identity Server 7.3.0, and get the app running locally.
+
+Challenges faced:
+
+- Had a Node.js version conflict with a previously installed version — resolved by reinstalling the correct version
+- pnpm install was failing with ERR_PNPM_FETCH_404 errors for @wso2is packages due to a broken lockfile — resolved by pulling from upstream again after the wso2 team pushed a fix
+
+Working branch: https://github.com/Dhruvirana08/identity-apps/tree/fix-issue-27869
+
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Clone the repository and run pnpm install && pnpm build from the project root.
+
+2. Run: grep -rn "<img" --include="*.tsx" ./features | grep -v "alt=" | grep -v "node_modules"
+3. **Expected:** No result for the search
+4. **Actual:** 25 results are shows multiple <img> tags missing alt attributes appear across the affected files.
+* The GitHub issue mentions only 14 violations out of 25, which is what I will focus on.
+  
+OR
+
+2. Navigate to any of the affected files listed in the issue, for example: ./features/admin.application-templates.v1/components/application-template-card.tsx
+3. Go to Line 176. 
+4. **Expected:** <img> tag has an alt attribute.
+5. **Actual:** <img> tag is missing the alt attribute, violating the react-doctor/alt-text accessibility rule
 
 ### Reproduction Evidence
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- **Screenshots/logs:** <img width="1780" height="802" alt="image of grep result" src="https://github.com/user-attachments/assets/6e353a8f-171b-4777-8509-fdc1e7892c9b" />
+
+- **My findings:** Confirmed all 14 violations across the 11 files listed in the GitHub issue, and the grep result had a missing alt attribute for the <img> tag. The affected files are in the features folder and for template files or social login buttons like Apple, Facebook, etc. 
 
 ---
 
@@ -92,28 +111,37 @@ These are also the same files mentioned in the comment on the issue page.
 
 [Your analysis of the root cause - what's causing the issue?]
 
+The root cause is that <img> tags were added to these components without alt attributes, violating WCAG 2.1 AA accessibility standards. It states to provide "Text Alternatives: Provide text alternatives for non-text content, such as images and multimedia". The react-doctor/alt-text ESLint rule enforces this requirement, but these instances were missed.
+
 ### Proposed Solution
 
 [High-level description of your fix approach]
 
+Add appropriate alt attributes to each of the 14 affected <img> tags. For social login icons (Google, Apple, GitHub, Facebook, Microsoft) and other decorative images, use alt="". For images that convey meaningful information, add a descriptive alt="...".
+
 ### Implementation Plan
 
-Using UMPIRE framework (adapted):
+Using the UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** 14 <img> tags across 11 files are missing alt attributes, causing accessibility errors that prevent screen reader users from understanding the UI.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** Other <img> tags in the codebase that correctly use alt="" for icons serve as the pattern to follow. For example, checking nearby components that handle images correctly.
 
-**Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+**Plan:** 
+1. Open each of the 11 affected files listed in the issue
+2. Navigate to the specified line number
+3. Determine if the image is decorative (icon/logo) → add alt=""
+4. Determine if the image conveys meaning → add descriptive alt="description"
+5. Run the grep command again to confirm zero remaining violations
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** https://github.com/Dhruvirana08/identity-apps/tree/fix-issue-27869
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Review:** Self-review for the following:
+- Follow CONTRIBUTING.md conventions
+- No unrelated files modified
+- Commit message follows project conventions
 
-**Evaluate:** [How will you verify it works?]
+**Evaluate:** Running the grep command after fixes should return 12 results instead of 25. All 14 violations resolved should reduce the error shown. Also, manually check all the listed files for <img> tags with an alt attribute.
 
 ---
 
