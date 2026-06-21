@@ -5,8 +5,8 @@ GitHub contribution log for CodePath Summer - AI 301
 
 **Contribution Number:** [1]  
 **Student:** [Dhruvi Rana]  
-**Issue:** Issue #27869 - [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]
-**Status:** [Phase I Complete]
+**Issue:** #27869 - [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]
+**Status:** [Phase II Complete]
 
 ---
 
@@ -30,21 +30,17 @@ Based on the issue description and linked files, I understand that I need to add
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
-
 14 <img> tags across the codebase are missing alt attributes, violating the react-doctor/alt-text ESLint rule at error severity. This is an accessibility issue that affects users who rely on screen readers.
 
 ### Expected Behavior
 
-[What should happen?]
-
-The reported <img> tags should have alt attributes. Decorative images should use alt="" and non-decorative images should have descriptive alt="..." or use aria-label or aria-labelledby. 
+The reported `<img>` tags should have alt attributes. Decorative images should use alt="" and non-decorative images should have descriptive alt="..." or use aria-label or aria-labelledby. 
 
 ### Current Behavior
 
 [What actually happens?]
 
-14 <img> tags across 11 files are missing alt attributes and are flagged as errors by the react-doctor/alt-text rule.
+14 `<img>` tags across 11 files are missing alt attributes and are flagged as errors by the react-doctor/alt-text rule.
 
 ### Affected Components
 
@@ -64,13 +60,12 @@ Affected files:
 11. ./features/admin.push-providers.v1/components/push-provider-card.tsx
 
 These are also the same files mentioned in the comment on the issue page. 
+
 ---
 
 ## Reproduction Process
 
 ### Environment Setup
-
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
 
 Used the README and CONTRIBUTING.md of the repo to complete the environment setup. It took approximately 3 hours to install all prerequisites (JDK, Maven, Node.js, pnpm, Git), clone the repo, download and configure WSO2 Identity Server 7.3.0, and get the app running locally.
 
@@ -101,7 +96,7 @@ OR
 
 - **Screenshots/logs:** <img width="1780" height="802" alt="image of grep result" src="https://github.com/user-attachments/assets/6e353a8f-171b-4777-8509-fdc1e7892c9b" />
 
-- **My findings:** Confirmed all 14 violations across the 11 files listed in the GitHub issue, and the grep result had a missing alt attribute for the <img> tag. The affected files are in the features folder and for template files or social login buttons like Apple, Facebook, etc. 
+- **My findings:** Confirmed all 14 violations across the 11 files listed in the GitHub issue and verified with the grep result file lines that they had a missing alt attribute for the `<img>` tags. The affected files are in the features folder and for template files or social login buttons like Apple, Facebook, etc. 
 
 ---
 
@@ -109,13 +104,9 @@ OR
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
-
 The root cause is that <img> tags were added to these components without alt attributes, violating WCAG 2.1 AA accessibility standards. It states to provide "Text Alternatives: Provide text alternatives for non-text content, such as images and multimedia". The react-doctor/alt-text ESLint rule enforces this requirement, but these instances were missed.
 
 ### Proposed Solution
-
-[High-level description of your fix approach]
 
 Add appropriate alt attributes to each of the 14 affected <img> tags. For social login icons (Google, Apple, GitHub, Facebook, Microsoft) and other decorative images, use alt="". For images that convey meaningful information, add a descriptive alt="...".
 
