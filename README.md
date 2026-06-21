@@ -5,7 +5,7 @@ GitHub contribution log for CodePath Summer - AI 301
 
 **Contribution Number:** [1]  
 **Student:** [Dhruvi Rana]  
-**Issue:** [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]  
+**Issue:** Issue #27869 - [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]
 **Status:** [Phase I Complete]
 
 ---
@@ -32,18 +32,38 @@ Based on the issue description and linked files, I understand that I need to add
 
 [In your own words, what's broken or missing?]
 
+14 <img> tags across the codebase are missing alt attributes, violating the react-doctor/alt-text ESLint rule at error severity. This is an accessibility issue that affects users who rely on screen readers.
+
 ### Expected Behavior
 
 [What should happen?]
+
+The reported <img> tags should have alt attributes. Decorative images should use alt="" and non-decorative images should have descriptive alt="..." or use aria-label or aria-labelledby. 
 
 ### Current Behavior
 
 [What actually happens?]
 
+14 <img> tags across 11 files are missing alt attributes and are flagged as errors by the react-doctor/alt-text rule.
+
 ### Affected Components
 
 [Which parts of the codebase are involved?]
 
+Affected files: 
+./features/admin.application-templates.v1/components/application-template-card.tsx
+./features/admin.core.v1/components/modals/feature-preview-modal.tsx
+./features/admin.flow-builder-core.v1/components/resources/elements/adapters/button-adapter.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/apple-execution.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/facebook-execution.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/github-execution.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/google-execution.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/microsoft-execution.tsx
+./features/admin.flow-builder-core.v1/components/resources/steps/execution/execution-factory/index.tsx
+./features/admin.login-flow-builder.v1/components/nodes/sign-in-box-node/sign-in-box-node.tsx
+./features/admin.push-providers.v1/components/push-provider-card.tsx
+
+These are also the same files mentioned in the comment on the issue page. 
 ---
 
 ## Reproduction Process
