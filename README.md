@@ -6,7 +6,9 @@ GitHub contribution log for CodePath Summer - AI 301
 **Contribution Number:** [1]  
 **Student:** [Dhruvi Rana]  
 **Issue:** #27869 - [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]
-**Status:** [Phase II Complete]
+**Status:** [Phase III Complete]
+
+**Working branch:** [https://github.com/Dhruvirana08/identity-apps/tree/fix-issue-27869]
 
 ---
 
@@ -138,38 +140,43 @@ Using the UMPIRE framework (adapted):
 
 ## Testing Strategy
 
-### Unit Tests
-
-- [ ] Test case 1: [Description]
-- [ ] Test case 2: [Description]
-- [ ] Test case 3: [Description]
-
-### Integration Tests
-
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
-
 ### Manual Testing
 
 [What you tested manually and results]
+
+- Ran `grep -rn "<img" --include="*.tsx" ./features | grep -v "alt=" | grep -v "node_modules"` before and after the fix to confirm affected instances were resolved. Most fixed files no longer appear in the output; 3 files still appear as false positives because their `alt` attribute is on a separate line from the `<img>` tag in multi-line JSX (grep only checks the line containing `<img` itself) — manually confirmed `alt` is correctly present in each of these 3 files by inspecting the source directly.
+- Ran `pnpm build` and started both `apps/console` and `apps/myaccount` locally to confirm no build or runtime errors were introduced.
+- Ran `npx eslint` scoped to only the changed files, which returned 0 errors (pre-existing unrelated warnings only).
+- Did not perform a full manual screen reader or DevTools pass across every changed instance, given the scope of the change spans multiple files across unrelated flows in a large monorepo; the fix itself is a low-risk, static attribute change with no logic or rendering behavior altered.
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Week [3-4] Progress
 
 [What you built this week, challenges faced, decisions made]
 
-### Week [Y] Progress
+**What I built:**
+- Added missing `alt` attributes to `<img>` elements across all files listed in the affected files section of issue #27869
+- Used `alt=""` for decorative icons that sit next to a visible text label (Typography component) already describing the image (e.g. social login icons in execution-factory), and a descriptive `alt` value for standalone images with no adjacent label (e.g. `alt={ \`${selected?.name} preview\` }` in feature-preview-modal.tsx)
+- Verified changes via `grep -rn "<img"` before/after, `pnpm build`, running both apps locally, and `npx eslint` scoped to only the changed files (0 new errors)
 
-[Continue documenting as you work]
+**Challenges faced:**
+- Deciding whether an image was decorative or meaningful wasn't always obvious — had to check each component's surrounding JSX to see if a visible text label already conveyed the same information
+- Several of the changed components weren't directly reachable in the running app; they're rendered through factory/mapping components several layers removed from the UI, so tracing the actual variable/prop flow to find the right screen manually took longer than expected. Wasn't able to visually confirm every instance in DevTools as a result — relied on build/lint verification and source-level review instead for those cases
+- The initial `grep` check for missing `alt` attributes gave false positives on files using multi-line JSX, since it only checks the line containing `<img` itself; had to manually re-verify those 3 files individually
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
-- **Approach decisions:** [Why you chose certain approaches]
+- **Files modified:** All files mentioned in the affected files section of this log
+- **Commits this week:**
+- 94eea0c: fix: add missing alt attribute to files in admin.flow-builder-core.v1
+- 2cbd799: fix: add missing alt attribute to application-template-card.tsx in admin.application-templates.v1
+- 2949689: fix: add missing alt attribute to feature-preview-modal.tsx in admin.core.v1
+- 640a8e8: fix: add missing alt attribute to button-adapter.tsx in admin.flow-builder-core.v1
+- 5cce89e: fix: add missing alt attribute to sign-in-box-node.tsx in admin.login-flow-builder.v1
+- ba8f246: fix: add missing alt attribute to push-provider-card.tsx in admin.push-providers.v1
 
 ---
 
