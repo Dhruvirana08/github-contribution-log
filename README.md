@@ -6,7 +6,7 @@ GitHub contribution log for CodePath Summer - AI 301
 **Contribution Number:** [1]  
 **Student:** [Dhruvi Rana]  
 **Issue:** #27869 - [[GitHub issue link](https://github.com/wso2/product-is/issues/27869)]
-**Status:** [Phase III Complete]
+**Status:** [Phase IV - In-Progress]
 
 **Working branch:** [https://github.com/Dhruvirana08/identity-apps/tree/fix-issue-27869]
 
@@ -182,16 +182,20 @@ Using the UMPIRE framework (adapted):
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** [GitHub PR URL when submitted: https://github.com/wso2/identity-apps/pull/10509]
 
 **PR Description:** [Draft or final PR description - much of the content above can be adapted]
+
+- There were 14 <img> elements across the features/ directory missing the alt attribute, which impacts screen reader users and is required for WCAG 2.1 AA compliance (per this repo's accessibility guidelines on supporting screen readers with semantic HTML). This PR adds alt attributes across the affected files:
+
+-> alt="" for decorative icons that sit alongside a visible text label already describing the image (e.g. social login icons paired with their provider name) — this explicitly signals to assistive technology to skip the image, rather than leaving it to fall back to inconsistent or unhelpful behavior across different screen readers when alt is omitted entirely.
+-> A descriptive alt value for standalone images that convey information on their own, with no adjacent text label (e.g. template/feature preview images), using the relevant item name where available.
 
 **Maintainer Feedback:**
 - [Date]: [Summary of feedback received]
 - [Date]: [How you addressed it]
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
-
+**Status:** [**Awaiting review**]
 ---
 
 ## Learnings & Reflections
