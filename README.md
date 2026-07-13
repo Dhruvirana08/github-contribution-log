@@ -192,10 +192,10 @@ Using the UMPIRE framework (adapted):
 -> A descriptive alt value for standalone images that convey information on their own, with no adjacent text label (e.g. template/feature preview images), using the relevant item name where available.
 
 **Maintainer Feedback:**
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
+- [7/11/2026]: [The reviewer commented that alt attributes need to have some value assigned to it, instead of them being none.]
+- [7/12/2026]: [I plan to add the alt values to the attributes based on the file and context available. I might ask a clarification question about if this should be done for all attributes or if I should follow some guidelines for implementing.]
 
-**Status:** [**Awaiting review**]
+**Status:** [**Review Provided, waiting for modification from me**]
 ---
 
 ## Learnings & Reflections
